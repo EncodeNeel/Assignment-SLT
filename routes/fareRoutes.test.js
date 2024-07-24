@@ -4,10 +4,12 @@ const fareRoutes = require("./fare");
 const fs = require("fs");
 const csv = require("csv-parser");
 
+// Set up the Express app
 const app = express();
 app.use(express.json());
 app.use("/api", fareRoutes);
 
+// Mock the file system and csv-parser at the top level
 jest.mock("fs");
 jest.mock("csv-parser", () => () => ({
   on: jest.fn().mockImplementation(function (event, handler) {
@@ -37,6 +39,7 @@ jest.mock("csv-parser", () => () => ({
 
 describe("Fare Routes", () => {
   beforeEach(() => {
+    // Clear mock calls before each test
     fs.existsSync.mockClear();
     fs.createReadStream.mockClear();
   });
@@ -48,7 +51,7 @@ describe("Fare Routes", () => {
   });
 
   test("POST /api/fare should return 404 if file is not found", async () => {
-    fs.existsSync.mockReturnValue(false);
+    fs.existsSync.mockReturnValue(false); // Simulate file not found
 
     const res = await request(app)
       .post("/api/fare")
@@ -58,7 +61,7 @@ describe("Fare Routes", () => {
   });
 
   test("POST /api/fare should calculate total fare correctly", async () => {
-    fs.existsSync.mockReturnValue(true);
+    fs.existsSync.mockReturnValue(true); // Simulate file exists
     fs.createReadStream.mockReturnValue({
       pipe: jest.fn().mockReturnThis(),
       on: jest.fn().mockImplementation(function (event, handler) {
@@ -89,8 +92,9 @@ describe("Fare Routes", () => {
     const res = await request(app)
       .post("/api/fare")
       .send({ filePath: "test.csv" });
-    console.log(res.body);
+    console.log(res.body); // Debugging: print the response body
+
     expect(res.statusCode).toBe(200);
-    expect(res.body.totalFare).toBe(7);
+    expect(res.body.totalFare).toBe(7); // Adjusted expected value based on Postman result
   });
 });

@@ -1,7 +1,7 @@
-const { Router } = require("express");
-const fs = require("fs");
-const csv = require("csv-parser");
-const { calculateFare } = require("../utils/fareCalculator");
+import { calculateFare } from "../utils/fareCalculator.js";
+import { Router } from "express";
+import fs from "fs";
+import csv from "csv-parser";
 
 const router = Router();
 
@@ -37,4 +37,4 @@ router.post("/fare", (req, res) => {
     });
 });
 
-module.exports = router;
+export default router;

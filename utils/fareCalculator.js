@@ -1,4 +1,4 @@
-const moment = require("moment");
+import moment from "moment";
 
 const fareRules = {
   peakHours: {
@@ -44,4 +44,4 @@ const calculateFare = (fromLine, toLine, datetime) => {
   return fareRules.fares[fromLine][toLine][fareType];
 };
 
-module.exports = { calculateFare, isPeakHour };
+export { calculateFare, isPeakHour };
