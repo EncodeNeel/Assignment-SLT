@@ -1,12 +1,12 @@
-import moment from "moment";
+const moment = require("moment");
 
 const fareRules = {
   peakHours: {
     Monday: ["08:00-10:00", "16:30-19:00"],
     Tuesday: ["08:00-10:00", "16:30-19:00"],
-    Wednesday: ["08:00-10:00", "16:30-19:00"],
-    Thursday: ["08:00-10:00", "16:30-19:00"],
-    Friday: ["08:00-10:00", "16:30-19:00"],
+    Wednesday: ["08:00-10:00"],
+    Thursday: ["08:00-10:00"],
+    Friday: ["08:00-10:00"],
     Saturday: ["10:00-14:00", "18:00-23:00"],
     Sunday: ["18:00-23:00"],
   },
@@ -44,4 +44,4 @@ const calculateFare = (fromLine, toLine, datetime) => {
   return fareRules.fares[fromLine][toLine][fareType];
 };
 
-export { calculateFare, isPeakHour };
+module.exports = { calculateFare, isPeakHour };
