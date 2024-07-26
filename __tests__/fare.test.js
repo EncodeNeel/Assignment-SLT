@@ -37,10 +37,8 @@ describe("POST /api/fare", () => {
   });
 
   test("returns 500 if there is an error reading the file", async () => {
-    // Mock fs.existsSync to return true to bypass the file not found check
     jest.spyOn(fs, "existsSync").mockReturnValue(true);
 
-    // Mock fs.createReadStream to throw an error
     jest.spyOn(fs, "createReadStream").mockImplementation(() => {
       const { Readable } = require("stream");
       const stream = new Readable({
